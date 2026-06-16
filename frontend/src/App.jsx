@@ -1,50 +1,37 @@
 import { useState } from "react";
-import "./App.css";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
-  const [balance, setBalance] = useState(10000);
-  const [amount, setAmount] = useState("");
+  const [user, setUser] = useState(null);
+  const [showLogin, setShowLogin] = useState(true);
 
-  const deposit = () => {
-    const value = Number(amount);
-    if (value > 0) {
-      setBalance(balance + value);
-      setAmount("");
-    }
-  };
+ const handleLogout = () => {
+  setUser(null);
+};
 
-  const withdraw = () => {
-    const value = Number(amount);
-
-    if (value > 0 && value <= balance) {
-      setBalance(balance - value);
-      setAmount("");
-    } else {
-      alert("Insufficient Balance!");
-    }
-  };
-
+if (user) {
   return (
-    <div className="atm-container">
-      <h1>ATM Management System</h1>
-
-      <div className="card">
-        <h2>Current Balance</h2>
-        <h3>₹ {balance}</h3>
-
-        <input
-          type="number"
-          placeholder="Enter Amount"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
+    <Dashboard
+      user={user}
+      onLogout={handleLogout}
+    />
+  );
+}
+  return (
+    <>
+      {showLogin ? (
+        <Login
+          setUser={setUser}
+          setShowLogin={setShowLogin}
         />
-
-        <div className="buttons">
-          <button onClick={deposit}>Deposit</button>
-          <button onClick={withdraw}>Withdraw</button>
-        </div>
-      </div>
-    </div>
+      ) : (
+        <Signup
+          setShowLogin={setShowLogin}
+        />
+      )}
+    </>
   );
 }
 
