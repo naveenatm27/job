@@ -11,7 +11,7 @@ const startServer = async () => {
 
   const app = express();
 
-  app.use(cors());
+  app.use(cors({origin:"https://job-2c1p.vercel.app/"}));
   app.use(express.json());
   app.use("/api/atm", require("./routes/atmRoutes"));
 
