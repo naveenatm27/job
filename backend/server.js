@@ -6,22 +6,26 @@ dotenv.config();
 
 const connectDB = require("./config/db");
 
-connectDB();
+const startServer = async () => {
+  await connectDB();
 
-const app = express();
+  const app = express();
 
-app.use(cors());
-app.use(express.json());
+  app.use(cors());
+  app.use(express.json());
+  app.use("/api/atm", require("./routes/atmRoutes"));
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
+  app.use((err, req, res, next) => {
+    console.error(err.stack);
 
-  res.status(500).json({
-    message: err.message,
+    res.status(500).json({
+      message: err.message,
+    });
   });
-});
-app.use("/api/atm", require("./routes/atmRoutes"));
 
-app.listen(process.env.PORT || 5000, () => {
-  console.log("Server Running");
-});
+  app.listen(process.env.PORT || 5000, () => {
+    console.log("Server Running");
+  });
+};
+
+startServer();
