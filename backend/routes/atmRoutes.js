@@ -8,8 +8,8 @@ const {
   deposit,
   withdraw,
 } = require("../controllers/atmController");
-router.post("/Signup", signup);
-router.post("/Login", login);
+router.post("/signup", signup);
+router.post("/login", login);
 
 router.get("/balance/:accountNumber", checkBalance);
 
